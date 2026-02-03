@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+// import InputForm from "./components/InputForm";
+// import Result from "./components/Result";
+// import GraphView from "./components/GraphView";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Deadlock Detection System</h1>
+      {/* <InputForm />
+      <Result />
+      <GraphView /> */}
     </div>
   );
 }
