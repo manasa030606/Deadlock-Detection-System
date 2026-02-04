@@ -57,9 +57,14 @@
   justify-content: center;
   min-height: 600px;
   position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .graph-svg {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
   animation: fadeIn 0.6s ease-out;
 }
@@ -265,18 +270,58 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .graph-svg {
-    width: 100%;
-    height: auto;
+  .graph-container {
+    min-height: 500px;
   }
 }
 
 @media (max-width: 768px) {
-  .graph-container {
+  .graph-view {
+    border-radius: 16px;
+  }
+
+  .graph-header {
     padding: 1.5rem;
   }
+
+  .graph-container {
+    padding: 1.5rem;
+    min-height: 400px;
+  }
   
+  .graph-svg {
+    max-width: 100%;
+  }
+
   .graph-legend {
     gap: 1rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .graph-header {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .graph-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .graph-container {
+    padding: 1rem;
+    min-height: 350px;
+  }
+
+  .graph-legend {
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
   }
 }

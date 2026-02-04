@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
 import { Activity } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import './GraphView.css';
 
 const GraphView = ({ result }) => {
@@ -249,8 +249,8 @@ const GraphView = ({ result }) => {
           <>
             <svg
               ref={svgRef}
-              width="800"
-              height="600"
+              viewBox="0 0 800 600"
+              preserveAspectRatio="xMidYMid meet"
               className="graph-svg"
             />
             <div className="graph-legend">
