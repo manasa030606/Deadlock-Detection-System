@@ -6,6 +6,57 @@
   animation: slideUp 0.5s ease-out;
   border: 3px solid;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  /* Firefox */
+}
+
+/* Custom Scrollbar */
+.result-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.result-container::-webkit-scrollbar-track {
+  background: rgba(17, 24, 39, 0.4);
+  border-radius: 10px;
+  margin: 20px 8px 20px 0;
+}
+
+.result-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* Deadlock (Red) Scrollbar */
+.result-deadlock.result-container {
+  scrollbar-color: #f87171 rgba(17, 24, 39, 0.4);
+  /* Firefox */
+}
+
+.result-deadlock::-webkit-scrollbar-thumb {
+  background-color: #fca5a5;
+  background-image: linear-gradient(to bottom, #fca5a5 0%, #ef4444 100%);
+}
+
+.result-deadlock::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to bottom, #f87171 0%, #dc2626 100%);
+}
+
+/* Safe (Green) Scrollbar */
+.result-safe.result-container {
+  scrollbar-color: #34d399 rgba(17, 24, 39, 0.4);
+  /* Firefox */
+}
+
+.result-safe::-webkit-scrollbar-thumb {
+  background-color: #6ee7b7;
+  background-image: linear-gradient(to bottom, #6ee7b7 0%, #10b981 100%);
+}
+
+.result-safe::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to bottom, #34d399 0%, #059669 100%);
 }
 
 @keyframes slideUp {
