@@ -89,27 +89,27 @@ function App() {
   return (
     <div className="app">
       <div className="app-background"></div>
-      
+
       <div className="app-container">
         <header className="app-header">
           <div className="header-glow"></div>
           <div className="logo-container">
             <div className="logo-icon">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                <rect x="2" y="2" width="36" height="36" rx="8" stroke="url(#gradient1)" strokeWidth="2"/>
-                <circle cx="20" cy="20" r="6" fill="url(#gradient2)"/>
-                <circle cx="10" cy="10" r="3" fill="#3b82f6"/>
-                <circle cx="30" cy="10" r="3" fill="#8b5cf6"/>
-                <circle cx="10" cy="30" r="3" fill="#ec4899"/>
-                <circle cx="30" cy="30" r="3" fill="#f59e0b"/>
+                <rect x="2" y="2" width="36" height="36" rx="8" stroke="url(#gradient1)" strokeWidth="2" />
+                <circle cx="20" cy="20" r="6" fill="url(#gradient2)" />
+                <circle cx="10" cy="10" r="3" fill="#3b82f6" />
+                <circle cx="30" cy="10" r="3" fill="#8b5cf6" />
+                <circle cx="10" cy="30" r="3" fill="#ec4899" />
+                <circle cx="30" cy="30" r="3" fill="#f59e0b" />
                 <defs>
                   <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40">
-                    <stop offset="0%" stopColor="#3b82f6"/>
-                    <stop offset="100%" stopColor="#8b5cf6"/>
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#8b5cf6" />
                   </linearGradient>
                   <linearGradient id="gradient2" x1="0" y1="0" x2="40" y2="40">
-                    <stop offset="0%" stopColor="#ec4899"/>
-                    <stop offset="100%" stopColor="#f59e0b"/>
+                    <stop offset="0%" stopColor="#ec4899" />
+                    <stop offset="100%" stopColor="#f59e0b" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -159,12 +159,7 @@ function App() {
           </div>
         )}
 
-        <footer className="app-footer">
-          <div className="footer-content">
-            <p>Operating Systems Project • Deadlock Detection Algorithm</p>
-            <p className="footer-tech">Built with React.js • DFS Cycle Detection • SVG Visualization</p>
-          </div>
-        </footer>
+
       </div>
     </div>
   );
