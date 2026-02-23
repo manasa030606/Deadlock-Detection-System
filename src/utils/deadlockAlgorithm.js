@@ -4,8 +4,8 @@
  */
 
 export const detectDeadlock = (processes, resources, resourceInstances, allocation, request) => {
-  const n = processes.length;
-  const m = resources.length;
+  // const n = processes.length;
+  // const m = resources.length;
 
   // Build Available, Allocation, and Request matrices
   const Available = {};

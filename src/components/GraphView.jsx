@@ -12,7 +12,7 @@ const GraphView = ({ result }) => {
   }, [result]);
 
   const drawGraph = (data) => {
-    const { allProcesses, allResources, edges, cyclePath, hasDeadlock } = data;
+    const { allProcesses, allResources, edges, cyclePath} = data;
     
     const svg = svgRef.current;
     svg.innerHTML = '';
