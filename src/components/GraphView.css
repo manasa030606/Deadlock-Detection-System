@@ -5,7 +5,7 @@
   border-radius: 24px;
   padding: 0;
   border: 3px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset,
     0 0 100px rgba(59, 130, 246, 0.1);
@@ -43,7 +43,7 @@
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 
+  box-shadow:
     0 8px 16px rgba(59, 130, 246, 0.3),
     0 0 0 3px rgba(59, 130, 246, 0.2);
   flex-shrink: 0;
@@ -74,6 +74,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -82,28 +83,36 @@
 
 /* SVG Node Animations */
 .node-safe {
-  animation: nodeAppear 0.5s ease-out;
+  animation: nodeAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .node-deadlocked {
-  animation: nodeAppear 0.5s ease-out, nodePulse 2s ease-in-out infinite;
+  animation: nodeAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @keyframes nodeAppear {
   from {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0) translateY(20px);
   }
+
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
 }
 
 @keyframes nodePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -111,36 +120,40 @@
 
 .glow-ring {
   animation: glowPulse 2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.2;
     transform: scale(1);
   }
+
   50% {
-    opacity: 0.5;
-    transform: scale(1.1);
+    opacity: 0.6;
+    transform: scale(1.15);
   }
 }
 
 /* Edge Animations */
 .edge-normal {
-  animation: edgeFadeIn 0.8s ease-out;
+  animation: edgeFadeIn 0.8s ease-out both;
 }
 
 .edge-cycle {
-  animation: edgeFadeIn 0.8s ease-out;
+  animation: edgeFadeIn 0.8s ease-out both;
 }
 
 @keyframes edgeFadeIn {
   from {
     opacity: 0;
-    stroke-dashoffset: 100;
   }
+
   to {
     opacity: 1;
-    stroke-dashoffset: 0;
   }
 }
 
@@ -220,9 +233,12 @@
 }
 
 @keyframes legendPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -246,9 +262,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -288,7 +307,7 @@
     padding: 1.5rem;
     min-height: 400px;
   }
-  
+
   .graph-svg {
     max-width: 100%;
   }

@@ -98,7 +98,7 @@ const GraphView = ({ result }) => {
     defs.appendChild(filter);
     svg.appendChild(defs);
 
-    // Draw edges
+    // Draw edges with instance labels
     edges.forEach((edge) => {
       const fromPos = processPositions[edge.from] || resourcePositions[edge.from];
       const toPos = processPositions[edge.to] || resourcePositions[edge.to];
@@ -124,6 +124,33 @@ const GraphView = ({ result }) => {
       }
       
       g.appendChild(line);
+
+      // Add instance count label on edge
+      if (edge.instances && edge.instances > 1) {
+        const midX = (fromPos.x + toPos.x) / 2;
+        const midY = (fromPos.y + toPos.y) / 2;
+        
+        const labelBg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        labelBg.setAttribute('cx', midX);
+        labelBg.setAttribute('cy', midY);
+        labelBg.setAttribute('r', '14');
+        labelBg.setAttribute('fill', inCycle ? '#7f1d1d' : '#374151');
+        labelBg.setAttribute('stroke', inCycle ? '#ef4444' : '#6b7280');
+        labelBg.setAttribute('stroke-width', '2');
+        g.appendChild(labelBg);
+        
+        const labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        labelText.setAttribute('x', midX);
+        labelText.setAttribute('y', midY + 4);
+        labelText.setAttribute('text-anchor', 'middle');
+        labelText.setAttribute('font-size', '12');
+        labelText.setAttribute('font-weight', '700');
+        labelText.setAttribute('fill', inCycle ? '#fca5a5' : '#d1d5db');
+        labelText.setAttribute('font-family', "'SF Mono', monospace");
+        labelText.textContent = edge.instances;
+        g.appendChild(labelText);
+      }
+      
       svg.appendChild(g);
     });
 
@@ -177,10 +204,11 @@ const GraphView = ({ result }) => {
       svg.appendChild(g);
     });
 
-    // Draw resources (rounded squares)
+    // Draw resources (rounded squares) with instance counts
     allResources.forEach((r) => {
       const pos = resourcePositions[r];
       const inCycle = isInCycle(r);
+      const instances = data.resourceInstances?.[r] || 1;
 
       const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('class', inCycle ? 'node-deadlocked resource-node' : 'node-safe resource-node');
@@ -216,10 +244,10 @@ const GraphView = ({ result }) => {
       }
       g.appendChild(rect);
 
-      // Text
+      // Resource label
       const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       text.setAttribute('x', pos.x);
-      text.setAttribute('y', pos.y + 6);
+      text.setAttribute('y', pos.y - 5);
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', '18');
       text.setAttribute('font-weight', '700');
@@ -227,6 +255,18 @@ const GraphView = ({ result }) => {
       text.setAttribute('font-family', "'SF Mono', monospace");
       text.textContent = r;
       g.appendChild(text);
+
+      // Instance count badge - MORE PROMINENT
+      const badgeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      badgeText.setAttribute('x', pos.x);
+      badgeText.setAttribute('y', pos.y + 15);
+      badgeText.setAttribute('text-anchor', 'middle');
+      badgeText.setAttribute('font-size', '16');
+      badgeText.setAttribute('font-weight', '700');
+      badgeText.setAttribute('fill', inCycle ? '#78350f' : '#047857');
+      badgeText.setAttribute('font-family', "'SF Mono', monospace");
+      badgeText.textContent = `[${instances}]`;
+      g.appendChild(badgeText);
 
       svg.appendChild(g);
     });
@@ -240,7 +280,7 @@ const GraphView = ({ result }) => {
         </div>
         <div className="header-content">
           <h2>Resource Allocation Graph</h2>
-          <p>Visual representation of process-resource relationships</p>
+          <p>Visual representation with resource instances</p>
         </div>
       </div>
 
@@ -260,7 +300,7 @@ const GraphView = ({ result }) => {
               </div>
               <div className="legend-item">
                 <div className="legend-square resource-legend"></div>
-                <span>Resource</span>
+                <span>Resource [instances]</span>
               </div>
               <div className="legend-item">
                 <div className="legend-line normal-legend"></div>

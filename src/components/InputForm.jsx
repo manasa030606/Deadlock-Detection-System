@@ -1,14 +1,16 @@
 import React from 'react';
-import { Plus, Trash2, Cpu, Database, Play } from 'lucide-react';
+import { Plus, Trash2, Cpu, Database, Play, Hash } from 'lucide-react';
 import './InputForm.css';
 
 const InputForm = ({
   numProcesses,
   numResources,
+  resourceInstances,
   allocation,
   request,
   onNumProcessesChange,
   onNumResourcesChange,
+  onResourceInstanceChange,
   onAddAllocation,
   onAddRequest,
   onUpdateAllocation,
@@ -80,6 +82,35 @@ const InputForm = ({
           </div>
         </div>
 
+        {/* Resource Instances */}
+        <div className="section">
+          <div className="section-title">
+            <span className="title-dot"></span>
+            Resource Instances
+            <span className="badge">{resources.length}</span>
+          </div>
+          <p className="section-desc">Number of instances available for each resource</p>
+
+          <div className="instances-grid">
+            {resources.map(r => (
+              <div key={r} className="instance-item">
+                <div className="instance-label">
+                  <Hash size={14} />
+                  {r}
+                </div>
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={resourceInstances[r] || 1}
+                  onChange={(e) => onResourceInstanceChange(r, e.target.value)}
+                  className="instance-input"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Allocation Section */}
         <div className="section">
           <div className="section-title">
@@ -87,7 +118,7 @@ const InputForm = ({
             Resource Allocation
             <span className="badge">{allocation.length}</span>
           </div>
-          <p className="section-desc">Which process currently holds which resource</p>
+          <p className="section-desc">Which process holds which resources and how many</p>
 
           <div className="items-list">
             {allocation.length === 0 ? (
@@ -111,6 +142,16 @@ const InputForm = ({
                     </select>
                     
                     <div className="arrow-indicator">holds</div>
+                    
+                    <input
+                      type="number"
+                      min="1"
+                      max={resourceInstances[alloc.resource] || 1}
+                      value={alloc.instances || 1}
+                      onChange={(e) => onUpdateAllocation(idx, 'instances', e.target.value)}
+                      className="instances-input"
+                      title="Number of instances"
+                    />
                     
                     <select
                       value={alloc.resource}
@@ -148,7 +189,7 @@ const InputForm = ({
             Resource Requests
             <span className="badge">{request.length}</span>
           </div>
-          <p className="section-desc">Which process is waiting for which resource</p>
+          <p className="section-desc">Which process needs which resources and how many</p>
 
           <div className="items-list">
             {request.length === 0 ? (
@@ -171,7 +212,17 @@ const InputForm = ({
                       ))}
                     </select>
                     
-                    <div className="arrow-indicator">requests</div>
+                    <div className="arrow-indicator">needs</div>
+                    
+                    <input
+                      type="number"
+                      min="1"
+                      max={resourceInstances[req.resource] || 1}
+                      value={req.instances || 1}
+                      onChange={(e) => onUpdateRequest(idx, 'instances', e.target.value)}
+                      className="instances-input"
+                      title="Number of instances"
+                    />
                     
                     <select
                       value={req.resource}

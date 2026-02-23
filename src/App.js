@@ -8,6 +8,7 @@ import './App.css';
 function App() {
   const [numProcesses, setNumProcesses] = useState(3);
   const [numResources, setNumResources] = useState(3);
+  const [resourceInstances, setResourceInstances] = useState({ 'R1': 1, 'R2': 1, 'R3': 1 });
   const [allocation, setAllocation] = useState([]);
   const [request, setRequest] = useState([]);
   const [result, setResult] = useState(null);
@@ -24,28 +25,42 @@ function App() {
 
   const handleNumResourcesChange = (value) => {
     setNumResources(value);
+    const newInstances = {};
+    for (let i = 1; i <= value; i++) {
+      const rKey = `R${i}`;
+      newInstances[rKey] = resourceInstances[rKey] || 1;
+    }
+    setResourceInstances(newInstances);
     setAllocation([]);
     setRequest([]);
     setResult(null);
   };
 
+  const handleResourceInstanceChange = (resource, instances) => {
+    setResourceInstances({
+      ...resourceInstances,
+      [resource]: parseInt(instances) || 1
+    });
+    setResult(null);
+  };
+
   const handleAddAllocation = () => {
-    setAllocation([...allocation, { process: processes[0], resource: resources[0] }]);
+    setAllocation([...allocation, { process: processes[0], resource: resources[0], instances: 1 }]);
   };
 
   const handleAddRequest = () => {
-    setRequest([...request, { process: processes[0], resource: resources[0] }]);
+    setRequest([...request, { process: processes[0], resource: resources[0], instances: 1 }]);
   };
 
   const handleUpdateAllocation = (index, field, value) => {
     const newAllocation = [...allocation];
-    newAllocation[index][field] = value;
+    newAllocation[index][field] = field === 'instances' ? parseInt(value) || 1 : value;
     setAllocation(newAllocation);
   };
 
   const handleUpdateRequest = (index, field, value) => {
     const newRequest = [...request];
-    newRequest[index][field] = value;
+    newRequest[index][field] = field === 'instances' ? parseInt(value) || 1 : value;
     setRequest(newRequest);
   };
 
@@ -58,7 +73,7 @@ function App() {
   };
 
   const handleDetect = () => {
-    const detectionResult = detectDeadlock(processes, resources, allocation, request);
+    const detectionResult = detectDeadlock(processes, resources, resourceInstances, allocation, request);
     setResult(detectionResult);
   };
 
@@ -66,6 +81,7 @@ function App() {
     const example = getExampleScenario();
     setNumProcesses(example.numProcesses);
     setNumResources(example.numResources);
+    setResourceInstances(example.resourceInstances);
     setAllocation(example.allocation);
     setRequest(example.request);
     setResult(null);
@@ -75,6 +91,7 @@ function App() {
     const example = getSafeScenario();
     setNumProcesses(example.numProcesses);
     setNumResources(example.numResources);
+    setResourceInstances(example.resourceInstances);
     setAllocation(example.allocation);
     setRequest(example.request);
     setResult(null);
@@ -116,7 +133,7 @@ function App() {
             </div>
             <div>
               <h1 className="app-title">DEADLOCK DETECTION SYSTEM</h1>
-              <p className="app-subtitle">Advanced Resource Allocation Graph Analysis</p>
+              <p className="app-subtitle">Multiple Resource Instance Analysis</p>
             </div>
           </div>
           <div className="header-decoration">
@@ -131,10 +148,12 @@ function App() {
             <InputForm
               numProcesses={numProcesses}
               numResources={numResources}
+              resourceInstances={resourceInstances}
               allocation={allocation}
               request={request}
               onNumProcessesChange={handleNumProcessesChange}
               onNumResourcesChange={handleNumResourcesChange}
+              onResourceInstanceChange={handleResourceInstanceChange}
               onAddAllocation={handleAddAllocation}
               onAddRequest={handleAddRequest}
               onUpdateAllocation={handleUpdateAllocation}
@@ -158,8 +177,6 @@ function App() {
             <Result result={result} />
           </div>
         )}
-
-
       </div>
     </div>
   );
